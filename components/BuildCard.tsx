@@ -1,19 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Cpu, Aperture, MemoryStick, Database, MoveRight } from "lucide-react";
-
-interface BuildCardProps {
-  title: string;
-  price: string;
-  status: "GOOD" | "BETTER" | "ULTIMATE";
-  gpu: string;
-  imageUrl: string;
-  href: string;
-  processorWidth: string;
-  graphicsWidth: string;
-  memoryWidth: string;
-  storageWidth: string;
-}
+import { BuildCardProps } from "../types/cardTypes";
 
 export default function BuildCard({
   title,
@@ -28,95 +16,143 @@ export default function BuildCard({
   storageWidth,
 }: BuildCardProps) {
   return (
-    <div className="w-full max-w-[1200px] flex justify-center px-4">
-      <div className="relative w-full rounded-3xl p-1 group overflow-hidden">
-        {/* Gradient blur background */}
-        <div
-          className="absolute inset-0 rounded-3xl z-0 opacity-60 group-hover:opacity-100 blur-xl transition duration-500"
-          style={{
-            background:
-              "radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent), radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent), radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent), radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)",
-            backgroundSize: "400% 400%",
-            backgroundPosition: "88% 50%",
-          }}
-        />
-        <div
-          className={`relative z-10 rounded-3xl p-6 sm:p-10 bg-zinc-900 border-2 animate-border-color flex flex-col lg:flex-row gap-8 items-center`}
-        >
-          <div className="lg:w-1/2 w-full flex justify-center">
-            <Image
-              src={imageUrl}
-              alt={title}
-              width={600}
-              height={400}
-              className="rounded-lg object-contain w-full shadow-2xl"
-            />
-          </div>
-          <div className="lg:w-1/2 w-full flex flex-col">
-            <div className="flex flex-col sm:flex-row justify-between items-start mb-4 w-full">
-              <h2 className="text-4xl font-bold italic text-white">{status}</h2>
-              <span className="text-3xl font-bold text-[#7ED348] border-b-2 border-[#7ED348] mt-2 sm:mt-0">
+    <div className="flex flex-col w-[80%]">
+      <div className="relative p-[4px] group">
+        {/* Blurred glow effect */}
+        <div className="absolute inset-0 rounded-3xl z-[1] opacity-60 group-hover:opacity-100 blur-xl transition duration-500 bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"></div>
+
+        {/* Solid border gradient */}
+        <div className="absolute inset-0 rounded-3xl z-[1] bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"></div>
+
+        {/* Inner card container */}
+        <div className="relative z-10 rounded-[22px] p-4 sm:p-10 bg-zinc-900 flex gap-48 items-center">
+          {/* Image Section */}
+          <Image
+            src={imageUrl}
+            alt="specialBuilds"
+            width={400}
+            height={30}
+            loading="lazy"
+            style={{ color: 'transparent' }}
+            className="object-contain rounded-lg xl:flex hidden"
+          />
+
+          {/* Content Section */}
+          <div className="flex flex-col w-full justify-center items-center md:items-start">
+            {/* Status and Price */}
+            <div className="flex xl:items-center items-end justify-center flex-wrap-reverse sm:justify-between xl:justify-end 2xl:justify-between mb-8 flex-row-reverse xl:gap-12 w-full">
+              <div className="border-mono border-b-2 text-mono text-3xl font-medium hidden sm:flex">
                 {price}
-              </span>
+              </div>
+              <p className="md:text-6xl font-bold italic sm:text-5xl text-4xl">
+                {status}
+              </p>
             </div>
 
-            <h3 className="text-3xl sm:text-4xl font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400">
+            {/* GPU Title */}
+            <div className="bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text font-semibold text-3xl text-center md:text-left">
               {gpu}
-            </h3>
+            </div>
 
             {/* Stats */}
-            <div className="space-y-4 mb-8">
-              {[
-                {
-                  label: "Processor",
-                  icon: Cpu,
-                  color: "bg-red-500",
-                  width: processorWidth,
-                },
-                {
-                  label: "Graphics",
-                  icon: Aperture,
-                  color: "bg-purple-500",
-                  width: graphicsWidth,
-                },
-                {
-                  label: "Memory",
-                  icon: MemoryStick,
-                  color: "bg-orange-500",
-                  width: memoryWidth,
-                },
-                {
-                  label: "Storage",
-                  icon: Database,
-                  color: "bg-yellow-500",
-                  width: storageWidth,
-                },
-              ].map((stat) => (
-                <div key={stat.label} className="flex items-center gap-3">
-                  <div className="rounded-full p-2 bg-white">
-                    <stat.icon className="w-6 h-6 stroke-black" />
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <span className="text-sm mb-1">{stat.label}</span>
-                    <div className="relative w-full h-2 bg-gray-200 rounded">
-                      <div
-                        style={{ width: stat.width }}
-                        className={`absolute left-0 h-2 rounded ${stat.color}`}
-                      />
-                    </div>
+            <div className="w-[80%] flex flex-col gap-4 mt-4 max-w-[460px]">
+              {/* Processor */}
+              <div className="flex items-center">
+                <div className="rounded-full p-1 bg-white">
+                  <Cpu
+                    className="stroke-black"
+                    width={24}
+                    height={24}
+                    strokeWidth={2}
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <div className="ml-2">Processor</div>
+                  <div className="relative w-full h-2 bg-gray-200 rounded ml-2">
+                    <div
+                      className="absolute left-0 h-2 rounded bg-red-500"
+                      style={{ width: processorWidth }}
+                    ></div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* Button */}
-            <Link
-              href={href}
-              className="w-full bg-blue-600 text-white py-3 rounded font-bold hover:opacity-90 transition-all hover:scale-95 flex items-center justify-center gap-3"
-            >
-              view build
-              <MoveRight className="w-6 h-6" />
-            </Link>
+              {/* Graphics */}
+              <div className="flex items-center">
+                <div className="rounded-full p-1 bg-white">
+                  <Aperture
+                    className="stroke-black"
+                    width={24}
+                    height={24}
+                    strokeWidth={2}
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <div className="ml-2">Graphics</div>
+                  <div className="relative w-full h-2 bg-gray-200 rounded ml-2">
+                    <div
+                      className="absolute left-0 h-2 rounded bg-purple-500"
+                      style={{ width: graphicsWidth }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Memory */}
+              <div className="flex items-center">
+                <div className="rounded-full p-1 bg-white">
+                  <MemoryStick
+                    className="stroke-black"
+                    width={24}
+                    height={24}
+                    strokeWidth={2}
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <div className="ml-2">Memory</div>
+                  <div className="relative w-full h-2 bg-gray-200 rounded ml-2">
+                    <div
+                      className="absolute left-0 h-2 rounded bg-orange-500"
+                      style={{ width: memoryWidth }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Storage */}
+              <div className="flex items-center">
+                <div className="rounded-full p-1 bg-white">
+                  <Database
+                    className="stroke-black"
+                    width={24}
+                    height={24}
+                    strokeWidth={2}
+                  />
+                </div>
+                <div className="flex flex-col w-full">
+                  <div className="ml-2">Storage</div>
+                  <div className="relative w-full h-2 bg-gray-200 rounded ml-2">
+                    <div
+                      className="absolute left-0 h-2 rounded bg-yellow-500"
+                      style={{ width: storageWidth }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile price */}
+              <div className="text-mono text-3xl w-full mb-8 mt-2 flex justify-center sm:hidden">
+                <span className="border-b-2 border-mono">{price}</span>
+              </div>
+
+              {/* Button */}
+              <Link className="w-full flex" href={href}>
+                <button className="whitespace-nowrap rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground hover:bg-primary/90 h-10 px-4 bg-blue-600 mt-12 w-full font-bold hover:opacity-80 transition-all hover:scale-95 gap-3 flex justify-center items-center py-2">
+                  view build
+                  <MoveRight className="w-[30px] h-[30px]" />
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
