@@ -92,7 +92,7 @@ export default function BuildsPage() {
   };
 
   return (
-    <div className="w-full flex justify-center items-center pb-20 pt-20 mt-8 mb-16">
+    <div className="w-full flex justify-center items-center pb-20 pt-20 bg-slate-950 min-h-screen">
       <div className="max-w-[1440px] w-[90%]">
         <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between mb-12 md:mb-16 gap-6 md:gap-0">
         <h1 className="bg-gradient-to-r from-blue-500 via-green-400 to-blue-600 inline-block text-transparent bg-clip-text font-bold text-5xl md:text-7xl">
@@ -125,7 +125,7 @@ export default function BuildsPage() {
       </div>
 
       <div className="flex justify-start w-full min-h-[240px]">
-        {/* Builds List */}
+        {/* Builds Grid */}
         {loading ? (
           <div className="text-center text-gray-400 py-20 w-full">
             Loading builds...
@@ -143,59 +143,116 @@ export default function BuildsPage() {
             )}
           </div>
         ) : (
-          <div className="space-y-6 w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
             {builds.map((build) => (
-              <Link
+              <div
                 key={build._id}
-                href={`/builds/${build._id}`}
-                className="block bg-[#1e3a8a] rounded-lg p-6 hover:bg-[#1e40af] transition-all border border-blue-700"
+                className="relative bg-[#0a0f1e] rounded-[2rem] overflow-hidden group"
+                style={{ aspectRatio: '1/1' }}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h2 className="text-2xl font-semibold text-white">
-                        {build.name}
-                      </h2>
-                      {!build.isPublic && (
-                        <span className="px-2 py-1 text-xs font-medium bg-yellow-500/20 text-yellow-400 rounded border border-yellow-500/30">
-                          Draft
-                        </span>
-                      )}
-                    </div>
-                    {build.description && (
-                      <p className="text-gray-300 mb-4 line-clamp-2">
-                        {build.description}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-6 text-sm text-gray-300">
-                      <div className="flex items-center gap-2">
-                        {build.userImage ? (
-                          <Image
-                            src={build.userImage}
-                            alt={build.username}
-                            width={24}
-                            height={24}
-                            className="rounded-full"
-                          />
-                        ) : (
-                          <div className="w-6 h-6 rounded-full bg-[#7ED348] flex items-center justify-center text-black text-xs font-semibold">
-                            {build.username.charAt(0).toUpperCase()}
-                          </div>
-                        )}
-                        <span className="text-white">{build.username}</span>
-                      </div>
-                      <span>{formatDate(build.createdAt)}</span>
-                      <span>{build.viewCount} views</span>
-                      <span>{build.replyCount} replies</span>
-                      {build.totalPrice && (
-                        <span className="text-[#7ED348] font-semibold">
-                          ${build.totalPrice.toLocaleString()}
-                        </span>
-                      )}
+                {/* Background Pattern with Gradient */}
+                <div className="absolute inset-0">
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/30 via-cyan-500/20 to-blue-600/40"></div>
+
+                  {/* ID Pattern Background */}
+                  <div className="absolute inset-0 p-6 text-[11px] leading-[1.4] break-all font-mono overflow-hidden">
+                    <div className="opacity-40 text-green-400">
+                      {build._id.repeat(50).slice(0, 600)}
                     </div>
                   </div>
                 </div>
-              </Link>
+
+                {/* Main Border */}
+                <div className="absolute inset-0 rounded-[2rem] border border-gray-600/40"></div>
+
+                {/* Corner Accents - Thin Lines */}
+                <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ borderRadius: '2rem' }}>
+                  {/* Top-left corner */}
+                  <line x1="0" y1="48" x2="0" y2="16" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="0" y1="16" x2="16" y2="16" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="16" y1="16" x2="48" y2="16" stroke="#9ca3af" strokeWidth="1" />
+
+                  {/* Top-right corner */}
+                  <line x1="100%" y1="48" x2="100%" y2="16" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="100%" y1="16" x2="calc(100% - 16px)" y2="16" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="calc(100% - 16px)" y1="16" x2="calc(100% - 48px)" y2="16" stroke="#9ca3af" strokeWidth="1" />
+
+                  {/* Bottom-left corner */}
+                  <line x1="0" y1="calc(100% - 48px)" x2="0" y2="calc(100% - 16px)" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="0" y1="calc(100% - 16px)" x2="16" y2="calc(100% - 16px)" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="16" y1="calc(100% - 16px)" x2="48" y2="calc(100% - 16px)" stroke="#9ca3af" strokeWidth="1" />
+
+                  {/* Bottom-right corner */}
+                  <line x1="100%" y1="calc(100% - 48px)" x2="100%" y2="calc(100% - 16px)" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="100%" y1="calc(100% - 16px)" x2="calc(100% - 16px)" y2="calc(100% - 16px)" stroke="#9ca3af" strokeWidth="1" />
+                  <line x1="calc(100% - 16px)" y1="calc(100% - 16px)" x2="calc(100% - 48px)" y2="calc(100% - 16px)" stroke="#9ca3af" strokeWidth="1" />
+                </svg>
+
+                {/* Plus icons at corners */}
+                <div className="absolute top-3 left-3 text-gray-400 text-xl font-light">+</div>
+                <div className="absolute top-3 right-3 text-gray-400 text-xl font-light">+</div>
+                <div className="absolute bottom-3 left-3 text-gray-400 text-xl font-light">+</div>
+                <div className="absolute bottom-3 right-3 text-gray-400 text-xl font-light">+</div>
+
+                {/* Content */}
+                <div className="relative z-10 p-8 flex flex-col h-full justify-between">
+                  {/* Build Name - Centered */}
+                  <div className="flex-1 flex items-center justify-center px-4">
+                    <h2 className="text-5xl font-bold text-white text-center leading-tight break-words">
+                      {build.name}
+                    </h2>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-4 justify-center mt-auto pt-6">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // Delete functionality would go here
+                      }}
+                      className="bg-[#1e3a8a] hover:bg-[#1e40af] text-white p-4 rounded-xl transition-all shadow-lg"
+                      title="Delete build"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                      </svg>
+                    </button>
+                    <Link
+                      href={`/builds/${build._id}`}
+                      className="bg-[#1e3a8a] hover:bg-[#1e40af] text-white p-4 rounded-xl transition-all shadow-lg"
+                      title="Edit build"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                        <path d="m15 5 4 4"></path>
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         )}

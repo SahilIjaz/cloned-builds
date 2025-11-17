@@ -6,7 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function  Navbar() {
   const { data: session } = useSession();
   const [showDropdown, setShowDropdown] = useState(false);
   const pathname = usePathname();
@@ -17,7 +17,7 @@ export default function Navbar() {
   // }
 
   return (
-    <nav className="w-full bg-slate-950/95 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50">
+    <nav className="w-full bg-slate-950/95 backdrop-blur-md border-b border-slate-800 sticky top-0 z-50 ">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}

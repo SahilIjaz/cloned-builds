@@ -19,10 +19,16 @@ export default function BuildCard({
     <div className="flex flex-col w-[80%]">
       <div className="relative p-[4px] group">
         {/* Blurred glow effect */}
-        <div className="absolute inset-0 rounded-3xl z-[1] opacity-60 group-hover:opacity-100 blur-xl transition duration-500 bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"></div>
+        <div
+          className="absolute inset-0 rounded-3xl z-[1] opacity-60 group-hover:opacity-100 blur-xl transition duration-500 bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+          style={{ backgroundSize: '400% 400%', backgroundPosition: '99.9998% 50%' }}
+        ></div>
 
         {/* Solid border gradient */}
-        <div className="absolute inset-0 rounded-3xl z-[1] bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"></div>
+        <div
+          className="absolute inset-0 rounded-3xl z-[1] bg-[radial-gradient(circle_farthest-side_at_0_100%,#00ccb1,transparent),radial-gradient(circle_farthest-side_at_100%_0,#7b61ff,transparent),radial-gradient(circle_farthest-side_at_100%_100%,#ffc414,transparent),radial-gradient(circle_farthest-side_at_0_0,#1ca0fb,#141316)]"
+          style={{ backgroundSize: '400% 400%', backgroundPosition: '99.9998% 50%' }}
+        ></div>
 
         {/* Inner card container */}
         <div className="relative z-10 rounded-[22px] p-4 sm:p-10 bg-zinc-900 flex gap-48 items-center">
@@ -44,7 +50,7 @@ export default function BuildCard({
               <div className="border-mono border-b-2 text-mono text-3xl font-medium hidden sm:flex">
                 {price}
               </div>
-              <p className="md:text-6xl font-bold italic sm:text-5xl text-4xl">
+              <p className="md:text-6xl font-bold italic tsm:text-5xl text-4xl">
                 {status}
               </p>
             </div>
@@ -147,7 +153,7 @@ export default function BuildCard({
 
               {/* Button */}
               <Link className="w-full flex" href={href}>
-                <button className="whitespace-nowrap rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground hover:bg-primary/90 h-10 px-4 bg-blue-600 mt-12 w-full font-bold hover:opacity-80 transition-all hover:scale-95 gap-3 flex justify-center items-center py-2">
+                <button className="whitespace-nowrap rounded-md text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground hover:bg-primary/90 h-10 px-4 bg-blue-600 w-full mt-12 font-bold hover:opacity-80 transition-all hover:scale-95 gap-3 flex justify-center items-center py-2">
                   view build
                   <MoveRight className="w-[30px] h-[30px]" />
                 </button>

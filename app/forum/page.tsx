@@ -239,17 +239,17 @@ export default function ForumPage() {
   return (
     <>
       {/* <Navbar /> */}
-      <div className="w-full flex justify-center pb-20 pt-20 mt-8 mb-16">
+      <div className="w-full flex justify-center pb-20 pt-32 bg-slate-950">
         <div className="max-w-[1440px] w-[90%]">
           {/* Header */}
-          <div className="mb-8 md:mb-12">
-            <h1 className="bg-gradient-to-r from-blue-500 via-green-400 to-blue-600 inline-block text-transparent bg-clip-text font-bold text-3xl md:text-7xl">
+          <div className="mb-12 md:mb-16">
+            <h1 className="bg-gradient-to-r from-blue-500 via-green-400 to-blue-600 inline-block text-transparent bg-clip-text font-bold text-4xl md:text-7xl mb-8">
               Forum
             </h1>
 
             {/* Ask Question Input */}
-            <div className="mb-8">
-              <p className="text-white mb-3 text-lg">Ask Question</p>
+            <div className="mb-18">
+              <p className="text-white mb-4 text-lg">Ask Question</p>
               <div className="flex gap-4 items-center">
                 <input
                   type="text"
@@ -289,12 +289,12 @@ export default function ForumPage() {
 
           {/* Tabs and Content */}
           <div className="mb-8">
-            <h2 className="text-white text-3xl md:text-4xl font-semibold mb-6">
+            <h2 className="text-white text-3xl md:text-4xl font-semibold mb-8">
               {activeTab === "questions" ? "Questions" : "Shared Builds"}
             </h2>
 
             {/* Tab Buttons */}
-            <div className="flex gap-4 mb-8">
+            <div className="flex gap-4 mb-10">
               <button
                 onClick={() => setActiveTab("questions")}
                 className={`px-6 py-2 rounded-lg font-medium transition-all ${
@@ -321,7 +321,7 @@ export default function ForumPage() {
             {loading ? (
               <div className="text-center text-gray-400 py-20">Loading...</div>
             ) : activeTab === "questions" ? (
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-4">
                 {questions.length === 0 ? (
                   <div className="text-center py-20">
                     <p className="text-gray-400 text-lg">No questions yet</p>
@@ -330,11 +330,12 @@ export default function ForumPage() {
                   questions.map((question) => (
                     <div
                       key={question._id}
-                      className="bg-[#1e3a8a] rounded-lg p-6 border border-blue-700"
+                      className="bg-[#0f2557] rounded-lg border border-[#1e3a8a]"
                     >
-                      <div className="flex items-start justify-between">
+                      <div className="flex items-start justify-between gap-4 p-6">
                         <div className="flex items-start gap-4 flex-1">
-                          <div className="flex items-center gap-2">
+                          {/* User Avatar and Info */}
+                          <div className="flex flex-col items-center gap-2 min-w-[80px]">
                             {question.userImage ? (
                               <Image
                                 src={question.userImage}
@@ -344,27 +345,26 @@ export default function ForumPage() {
                                 className="rounded-full"
                               />
                             ) : (
-                              <div className="w-10 h-10 rounded-full bg-[#3B82F6] flex items-center justify-center text-white text-sm font-semibold">
+                              <div className="w-10 h-10 rounded-full bg-[#3B82F6] flex items-center justify-center text-white text-base font-semibold">
                                 {question.username.charAt(0).toUpperCase()}
                               </div>
                             )}
-                          </div>
-                          <div className="flex-1">
-                            <div className="mb-1">
-                              <p className="text-white font-medium">
+                            <div className="text-center">
+                              <p className="text-white font-medium text-sm">
                                 {question.username}
                               </p>
-                              <p className="text-gray-400 text-sm">
+                              <p className="text-gray-400 text-xs truncate max-w-[80px]">
                                 {question.userEmail}
                               </p>
                             </div>
-                            <p className="text-white text-lg mt-2">
+                          </div>
+
+                          {/* Question Content */}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white text-xl font-normal leading-relaxed mb-3">
                               {question.content}
                             </p>
-                            <div className="flex items-center gap-4 mt-3">
-                              <span className="text-gray-400 text-sm">
-                                {formatDate(question.createdAt)}
-                              </span>
+                            <div className="flex items-center gap-4">
                               {question.answerCount > 0 && (
                                 <button
                                   onClick={() => toggleAnswers(question._id)}
@@ -386,10 +386,12 @@ export default function ForumPage() {
                             </div>
                           </div>
                         </div>
+
+                        {/* Answer Button */}
                         {session && (
                           <button
                             onClick={() => setSelectedQuestion(question._id)}
-                            className="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm transition-all"
+                            className="bg-[#1e293b] hover:bg-[#334155] text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-all flex-shrink-0"
                           >
                             answer
                           </button>

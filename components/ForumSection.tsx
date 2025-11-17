@@ -24,15 +24,13 @@ export default function ForumSection() {
           </Link>
         </div>
 
-        <div className="xl:flex hidden">
-          <Image
-            src="https://res.cloudinary.com/gamma1199/image/upload/v1712402205/forum_ysedaq.webp"
-            alt="forum"
-            width={500}
-            height={500}
-            className="rounded-md shadow-xl"
-          />
-        </div>
+        <Image
+          src="https://res.cloudinary.com/gamma1199/image/upload/v1712402205/forum_ysedaq.webp"
+          alt="forum"
+          width={500}
+          height={500}
+          className="xl:flex hidden rounded-md shadow-xl"
+        />
       </div>
     </div>
   );
