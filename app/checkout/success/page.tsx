@@ -15,6 +15,7 @@ export default function CheckoutSuccessPage() {
     if (sessionId && !processed) {
       handleSuccessfulPayment();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId, processed]);
 
   const handleSuccessfulPayment = async () => {
