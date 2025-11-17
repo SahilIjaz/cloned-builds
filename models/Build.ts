@@ -1,5 +1,12 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
+export interface IComponent {
+  name: string;
+  price: number;
+  imageUrl?: string;
+  category: string;
+}
+
 export interface IBuild extends Document {
   name: string;
   userId: mongoose.Types.ObjectId;
@@ -8,14 +15,14 @@ export interface IBuild extends Document {
   userImage?: string;
   description?: string;
   components?: {
-    cpu?: string;
-    gpu?: string;
-    motherboard?: string;
-    ram?: string;
-    storage?: string;
-    psu?: string;
-    case?: string;
-    cooling?: string;
+    cpu?: IComponent;
+    gpu?: IComponent;
+    motherboard?: IComponent;
+    ram?: IComponent;
+    storage?: IComponent;
+    psu?: IComponent;
+    case?: IComponent;
+    cooling?: IComponent;
   };
   totalPrice?: number;
   isPublic: boolean;
@@ -57,14 +64,78 @@ const BuildSchema = new Schema<IBuild>(
       maxlength: 2000,
     },
     components: {
-      cpu: String,
-      gpu: String,
-      motherboard: String,
-      ram: String,
-      storage: String,
-      psu: String,
-      case: String,
-      cooling: String,
+      cpu: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
+      gpu: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
+      motherboard: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
+      ram: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
+      storage: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
+      psu: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
+      case: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
+      cooling: {
+        type: {
+          name: { type: String },
+          price: { type: Number },
+          imageUrl: { type: String },
+          category: { type: String },
+        },
+        required: false,
+      },
     },
     totalPrice: {
       type: Number,

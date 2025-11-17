@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Info, PlusCircle, Loader2 } from 'lucide-react';
+import { Info, PlusCircle } from 'lucide-react';
 import { ProductCardProps } from '../types/cardTypes';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
+import BuildSelectionModal from './BuildSelectionModal';
 
 export default function ProductCard({
   category,
@@ -16,8 +18,9 @@ export default function ProductCard({
 }: ProductCardProps) {
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
@@ -40,47 +43,16 @@ export default function ProductCard({
     setRotateY(0);
   };
 
-  const handleAddToBuild = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch('/api/builds/add-component', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          componentType: category,
-          componentName: name,
-          componentPrice: price,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          // User not logged in, redirect to login
-          toast.error('Please login to add components to your build');
-          setTimeout(() => router.push('/login'), 1500);
-          return;
-        }
-        throw new Error(data.error || 'Failed to add component');
-      }
-
-      // Show success message
-      toast.success(data.message || 'Component added to build successfully!', {
-        duration: 3000,
-        icon: '✅',
-      });
-
-      // Optionally redirect to builds page after a delay
-      // setTimeout(() => router.push('/builds'), 2000);
-    } catch (error: any) {
-      console.error('Error adding to build:', error);
-      toast.error(error.message || 'Failed to add component to build. Please try again.');
-    } finally {
-      setIsLoading(false);
+  const handleAddToBuild = () => {
+    // Check if user is logged in
+    if (!session) {
+      toast.error('Please login to add components to your build');
+      setTimeout(() => router.push('/login'), 1500);
+      return;
     }
+
+    // Open the build selection modal
+    setShowModal(true);
   };
 
   return (
@@ -157,18 +129,13 @@ export default function ProductCard({
           <button
             type="button"
             onClick={handleAddToBuild}
-            disabled={isLoading}
-            className="transition duration-200 ease-linear items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 w-full rounded-lg flex gap-3 flex-row-reverse"
+            className="transition duration-200 ease-linear items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 w-full rounded-lg flex gap-3 flex-row-reverse"
             style={{
               transform: `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`,
             }}
           >
-            {isLoading ? 'Adding...' : 'add to build'}
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 ml-2 animate-spin" />
-            ) : (
-              <PlusCircle className="w-5 h-5 ml-2" />
-            )}
+            add to build
+            <PlusCircle className="w-5 h-5 ml-2" />
           </button>
         </div>
 
@@ -200,6 +167,18 @@ export default function ProductCard({
           </div>
         )}
       </div>
+
+      {/* Build Selection Modal */}
+      <BuildSelectionModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        component={{
+          category,
+          name,
+          price,
+          imageUrl,
+        }}
+      />
     </div>
   );
 }
