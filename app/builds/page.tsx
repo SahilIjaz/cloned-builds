@@ -10,7 +10,7 @@ import { Build } from "../../types/buildTypes";
 
 
 export default function BuildsPage() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [builds, setBuilds] = useState<Build[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +18,13 @@ export default function BuildsPage() {
   const [buildName, setBuildName] = useState("");
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState("");
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
 
   useEffect(() => {
     // Hide header on mount
@@ -90,6 +97,20 @@ export default function BuildsPage() {
       year: "numeric",
     });
   };
+
+  // Show loading while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="w-full flex justify-center items-center pb-20 pt-20 bg-slate-950 min-h-screen">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  // Don't render content if not authenticated (will redirect)
+  if (status === 'unauthenticated') {
+    return null;
+  }
 
   return (
     <div className="w-full flex justify-center items-center pb-20 pt-20 bg-slate-950 min-h-screen">

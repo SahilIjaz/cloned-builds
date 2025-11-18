@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Question, Answer, Build } from "@/types/forumTypes";
-import Navbar from "@/components/Navbar";
 
 export default function ForumPage() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<"questions" | "builds">(
     "questions"
   );
@@ -30,6 +31,13 @@ export default function ForumPage() {
   const [expandedQuestions, setExpandedQuestions] = useState<Set<string>>(
     new Set()
   );
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
 
   useEffect(() => {
     fetchData();
@@ -236,9 +244,22 @@ export default function ForumPage() {
     });
   };
 
+  // Show loading while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="w-full flex justify-center items-center pb-20 pt-32 bg-slate-950 min-h-screen">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  // Don't render content if not authenticated (will redirect)
+  if (status === 'unauthenticated') {
+    return null;
+  }
+
   return (
     <>
-      {/* <Navbar /> */}
       <div className="w-full flex justify-center pb-20 pt-32 bg-slate-950">
         <div className="max-w-[1440px] w-[90%]">
           {/* Header */}

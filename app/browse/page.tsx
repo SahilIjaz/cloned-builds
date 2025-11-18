@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
@@ -101,8 +101,15 @@ export default function BrowsePage() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState<any>(null);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
 
   const handleAddToBuild = (product: any) => {
     if (!session) {
@@ -120,6 +127,20 @@ export default function BrowsePage() {
       : products.filter(
           (p) => p.category.toLowerCase() === selectedCategory.toLowerCase()
         );
+
+  // Show loading while checking authentication
+  if (status === 'loading') {
+    return (
+      <section className="w-full flex justify-center items-center bg-slate-950 min-h-screen">
+        <div className="text-white text-xl">Loading...</div>
+      </section>
+    );
+  }
+
+  // Don't render content if not authenticated (will redirect)
+  if (status === 'unauthenticated') {
+    return null;
+  }
 
   return (
     <section className="w-full flex justify-center items-start bg-slate-950 min-h-screen pb-20">
