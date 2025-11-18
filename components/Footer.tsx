@@ -30,7 +30,7 @@ export default function Footer() {
                   width={230}
                   height={230}
                   decoding="async"
-                  src="/logo.png"
+                  src="/logo1.png"
                   style={{ color: "transparent" }}
                 />
               </div>

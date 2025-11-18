@@ -22,14 +22,15 @@ export default function  Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <Image
+            {/* <Image
               src="/logo.png"
               alt="logo"
               width={100}
-              height={100}
+              height={140}
               className="cursor-pointer"
               priority
-            />
+              
+            /> */}
           </Link>
 
           {/* Navigation Links */}

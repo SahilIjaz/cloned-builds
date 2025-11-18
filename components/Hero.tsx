@@ -41,17 +41,20 @@ export default function Hero() {
       />
 
       <div className="relative z-10 text-white flex flex-col items-center text-center max-w-md sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl">
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 leading-tight">
-          <span className="text-white block">Your</span>
-          <span className="text-[#7ED348]">DreamPC</span>
-          <span className="text-[#7ED348]">.</span>
-          {showCursor && <span className="text-[#7ED348]">|</span>}
-        </h1>
-        <p className="text-center font-medium text-base sm:text-lg md:text-xl lg:text-2xl w-full px-4 mb-8 sm:mb-10 leading-relaxed">
-          Design, customize, and build PC: Your journey to crafting the perfect
-          machine starts here<span className="hidden sm:inline">.</span> Unlock the potential of your imagination with
-          BuildPC, the gateway to personalized computing excellence
-        </p>
+        {/* Glassy background container for heading and paragraph */}
+        <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 sm:p-8 md:p-10 mb-8 sm:mb-10 border border-white/20 shadow-2xl">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 leading-tight">
+            <span className="text-white block">Your</span>
+            <span className="text-[#7ED348]">DreamPC</span>
+            <span className="text-[#7ED348]">.</span>
+            {showCursor && <span className="text-[#7ED348]">|</span>}
+          </h1>
+          <p className="text-center font-medium text-base sm:text-lg md:text-xl lg:text-2xl w-full px-4 leading-relaxed">
+            Design, customize, and build PC: Your journey to crafting the perfect
+            machine starts here<span className="hidden sm:inline">.</span> Unlock the potential of your imagination with
+            BuildPC, the gateway to personalized computing excellence
+          </p>
+        </div>
 
         {/* START BUILDING BUTTON */}
         <Link

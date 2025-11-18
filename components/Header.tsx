@@ -113,7 +113,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
 
           <Link href="/" className="flex-shrink-0">
-            <Image src="/logo.png" alt="logo" width={60} height={60} className="cursor-pointer" priority />
+            <Image src="/logo1.png" alt="logo" width={100} height={60} className="cursor-pointer" priority />
           </Link>
 
           <nav className="hidden lg:flex flex-1 items-center justify-center gap-12">
